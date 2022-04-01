@@ -1,5 +1,6 @@
-global vertices
-vertices =['A','B','C','D','E']
+#global vertices
+
+
 def ini_graph(vertices):
 	global dic
 	global graph
@@ -31,6 +32,9 @@ def get_adj(vertix):
 	return ans
 			
 			
+# keep track of parnet,level
+#there is a problem in parent
+# level is for layer eg if layer is 2 it takes 2 edges 
 	
 def bfs(source):
 	parent ={source:None}
@@ -51,11 +55,11 @@ def bfs(source):
 					next.append(u)
 		j+=1
 		frointer = next
-		#print(visited)	
+		
 	return parent
 	
 																	
-def sp_bfs(start,end):
+def shortest_path_with_bfs(start,end):
 	frointer = [start]
 	j=0
 	level ={}		
@@ -92,30 +96,18 @@ def visit(node,parent):
 	return parent
 		
 
-def relaxation_ini(vertices):
-	global values
-	values={}
-	for i in vertices:
-		values[i]=1000000
-	
-	return values
-	
-def relaxation(u):
-	values =relaxation_ini(vertices)
-	adj = get_adj(u)
-	values[u]=0
-	for i in adj:
-		weight(u,i)
-	
-	
-def weight(u,v):
-	if values[v]>=values[u]+graph[dic[u]][dic[v]]:
-		values[v]=values[u]+graph[dic[u]][dic[v]]
-	adj = get_adj(v)
-	for i in adj:
-		weight(v,i)
-	
-	
+
+
+
+
+# weighted graph using vertix * vertix array
+
+# relaxation can apply for this graph
+
+
+
+vertices =['A','B','C','D','E']
+
 
 ini_graph(vertices)
 add_edg('A','B',6)
@@ -127,7 +119,5 @@ add_edg('D','E',2)
 #print(graph)
 #print(get_adj('D'))
 #print(bfs('A'))
-#print(sp_bfs('A','D'))
+print(shortest_path_with_bfs('A','D'))
 #print(dfs(vertices))
-#print(relaxation('A'))
-#print(values)

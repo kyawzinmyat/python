@@ -15,11 +15,16 @@ class Node(INode):
 	def __init__(self,value):
 		self._value = value
 		self.adjs = []
+		
 	def add_adj(self,node:INode):
 		self.adjs.append(node)
+		
+		
 	@property
 	def value(self):
 		return self._value
+		
+		
 	def adj(self):
 		return self.adjs
 
@@ -53,6 +58,7 @@ class Bfs:
 						next.append(j)	
 			i+=1
 			adjs = next 
+			
 		return self.level
 					
 
@@ -60,6 +66,8 @@ class Result:
 	def __init__(self,list):
 		self.original = list
 		self.result ={}
+		
+		
 	def transform(self):
 		for key,value in self.original.items():
 			self.result[key.value]=value	
@@ -67,6 +75,8 @@ class Result:
 								
 																
 			
+ #implementing graph data structure with OOP,using Composite Design Pattern and startegy pattern
+
 
 nodeA = Node('A')
 nodeB = Node('B')
@@ -82,6 +92,7 @@ bfs = Bfs(nodeA)
 
 graph = GraphTraverse(bfs)
 t =graph.traverse()
+
 result = Result(t)
 f_result = result.transform()
 print(f_result)
@@ -90,8 +101,5 @@ print(f_result)
 
 
 
-adjA = nodeA.adj()
-adjB = nodeB.adj()
-adjC = nodeC.adj()
 
 

@@ -1,3 +1,8 @@
+				
+lst =['A','B','C','D','E','F']
+# inefficient for space
+# solve with dynamic programming 
+
 def ini_graph(lst):
 	global graph
 	global weight_graph
@@ -5,9 +10,11 @@ def ini_graph(lst):
 	global parent
 	
 	graph =[[0 for x in range(len(lst))]for j in range(len(lst))]
+	
 	weight_graph = [[0 for x in range(len(lst))]for j in range(len(lst))]
+	
 	incoming_graph = [[0 for x in range(len(lst))]for j in range(len(lst))]
-	parent ={}
+	
 	
 	
 def add_edge(v1,v2,weight):
@@ -63,33 +70,28 @@ def relaxation(u,v):
 
 
 
+# sp = shortest path
+# recurence relation = sp(vertix(n))(min(current_weight,sp(vertix(n-1))+weight(vertix(n-1),vertix(n))))
 		
 def sp_dp(vertix,):
-	global i
-	i+=1
+
 	if vertix:
 		if lst.index(vertix) != 0:
 			edge = get_incoming_edge(vertix)
 			for j in edge:
 				temp = value[vertix]
 				value[vertix]=min(value[vertix],weight_graph[lst.index(j)][lst.index(vertix)]+sp_dp(j))
-				if temp != value[vertix] or value[vertix]!=0:
-					parent[j]=vertix
+		
 			return value[vertix]			
 				
 		else:
 			value[vertix]=0	
 	return value[vertix]
 	
-def get_path(parent):
-			ans =[lst[0]]
-			for key in parent:
-				ans.append(parent[key])
-			return ans
+
 			
 
-				
-lst =['A','B','C','D','E','F']
+
 ini_value(lst)
 ini_graph(lst)
 add_edge('A','B',2)
@@ -101,17 +103,11 @@ add_edge('C','D',1)
 #add_edge('E','F',5)
 
 
-
-i=0
-#sp('A')
-#print(value)
-last=lst[-1]
-first = lst[0]
-
+#sp("A")
 sp_dp('D')
 print(value)
-print(parent)
-print(get_path(parent))
+
+
 #print(value)
 #print(get_adj('A'))
 #print(get_incoming_edge('B'))

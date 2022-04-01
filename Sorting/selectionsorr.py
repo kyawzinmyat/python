@@ -1,3 +1,8 @@
+
+# its simple is A[i] is the largest or not, the largest is in the A[i-1] to A[0]
+
+
+
 def p_max(A,i):
 	if i>0:
 		j = p_max(A,i-1)	

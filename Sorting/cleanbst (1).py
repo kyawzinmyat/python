@@ -126,7 +126,8 @@ class Bst:
 				else:
 					if not node.parent.right_child:
 						self._height_change(node.parent)
-					
+		
+								
 		def _height_change(self,node):
 			if node:
 				node.height += 1
@@ -210,7 +211,7 @@ b.insert(5)
 #b.insert(9)
 #print(b.root.left_child.value)
 #b.inorder(b.root)		
-#j=b.succesor(3)
+j=b.succesor(3)
 #print(j)	
 #print(b.height(b.root))	
 #print(b.screw(b.root))	
@@ -221,6 +222,7 @@ b.insert(5)
 b.inorder(b.root)				
 #print(b.root.right_child.right_child.value)	
 #print(b.height(b.root))
-print(b.screw(b.root.right_child))		
+print(b.screw(b.root.right_child))	
+
 			
 		
