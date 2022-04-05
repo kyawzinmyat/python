@@ -1,1 +1,1 @@
-What I've learned through out the year with python programming
+What I've learned over the year with python programming
