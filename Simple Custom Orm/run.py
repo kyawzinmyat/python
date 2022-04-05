@@ -1,6 +1,6 @@
 from Database import Database
 from table import Table,Column
-
+import inspect
 
 class Person_Info(Table):
 	name = Column("TEXT")
@@ -8,5 +8,18 @@ class Person_Info(Table):
 	gender = Column("TEXT")
 
 
+class Test(Table):
+	name = Column("Text")
+
+
+
 db = Database()
-db.create(Person_Info)
+
+
+t = Test(name="Kyaw")
+
+db.save(t)
+#print(db.execute("SELECT * FROM test").fetchall())
+#print(t.get_insert_command())
+
+

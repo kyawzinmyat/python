@@ -6,12 +6,12 @@ from Command import CommandFactory
 
 class Table:	
 	
-	column=[]
 	
 	def __init__(self,**kwargs):
 		self._data={"id":None}
-		self.commands = CommandFactory()
 		self.validate_column(kwargs)
+
+
 
 		
 		
@@ -39,28 +39,45 @@ class Table:
 			return cls.__name__
 	
 	@classmethod		
-	def get_command(cls):
+	def get_create_command(cls):
 			fields=[
 		("id","INTEGER PRIMARY KEY AUTOINCREMENT ")
 	]
 			for name,field in inspect.getmembers(cls):
 				if isinstance(field,Column):
 					fields.append((f"{name}",f"{field.type}"))
-					cls.column.append(name)
 			fields=[" ".join(x) for x in fields]	
 			command ="CREATE TABLE {nam} ({fields})".format(nam=cls.get_name(),fields=",".join(fields))
 			
 			return command
 		
 		
-		
+	# check object attribute when instantiate	
 	
 	def validate_column(self,kwargs):
-		print(self.column)
-		for column in kwargs:
-			if column not in self.column:
-				raise ValueError
-				
+		fields =[]
+		for name,field in inspect.getmembers(self.__class__):
+			if isinstance(field,Column):
+				fields.append(name)
+		
+		for name in kwargs:
+				if name not in fields:
+					raise ValueError
+					
+					
+	def get_insert_command(self):
+			fields=[]
+			values=[]
+			placeholder=[]
+			
+			for name,field in inspect.getmembers(self.__class__):
+				if isinstance(field,Column):
+					fields.append(name)
+					values.append(getattr(self,name))
+					placeholder.append("?")
+			command ="INSERT INTO {table_name}({fields}) VALUES({placeholder})".format(table_name=self.__class__.get_name(),fields=",".join(fields),placeholder=",".join(placeholder))
+			return command,values
+			
 		
 
 							
