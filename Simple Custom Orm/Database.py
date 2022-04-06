@@ -10,6 +10,7 @@ class Database:
 	def __init__(self):
 		self.conn = sqlite3.connect("sqlite.db")
 		self.cursor = self.conn.cursor()
+		Table.db = self
 		
 	def execute(self,command,values=None):
 		try:
@@ -31,8 +32,16 @@ class Database:
 		
 		
 	def save(self,instance):
+		
 		command,values = instance.get_insert_command()
 		self.execute(command,values)
+		instance._data["id"]=self.cursor.lastrowid
+		self.call_commit()
+		
+	def call_commit(self):
+		self.conn.commit()
+
+		
 		
 				
 	

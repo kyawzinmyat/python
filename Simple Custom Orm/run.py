@@ -10,16 +10,27 @@ class Person_Info(Table):
 
 class Test(Table):
 	name = Column("Text")
+	
+class Test2(Table):
+	gender = Column("Text")
 
 
 
 db = Database()
 
 
-t = Test(name="Kyaw")
+#db.create(Test2)
 
-db.save(t)
-#print(db.execute("SELECT * FROM test").fetchall())
-#print(t.get_insert_command())
+#db.save(Test2(gender="female"))
+
+
+#print(db.table())
+
+
+#j=Test.get_select_all_command()
+k= Test2.all()
+for j in k:
+	print(j.id)
+	print(j.gender)
 
 
