@@ -52,9 +52,9 @@ class Table:
 				fields.append(name)	
 		for name in kwargs:
 				if name not in fields:
-					if name+"_id" !=name:						
+					if name[:-3] not  in fields:		
+										
 						raise ValueError
-				
 										
 	# inspect field
 	@classmethod		
@@ -135,7 +135,9 @@ class Table:
 		values = cls.db.execute(command).fetchall()	
 	
 		for row in values:
-			data = dict(zip(fields,row))
+
+			new_fields,new_row=cls.check_foreignkey_and_modify(fields,row)
+			data = dict(zip(new_fields,new_row))
 			data_obj.append(cls(**data))
 		return data_obj	
 	

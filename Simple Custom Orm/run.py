@@ -32,9 +32,7 @@ db = Database()
 #for i in Test.all():
 #print(Test2.all())
 
-f =Test2.get(id=7)
-print(f.test1.name)
-#print(f.id)
+
 #for f in Test.all():
 #	print(f.id)
 
