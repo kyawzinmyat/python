@@ -7,17 +7,11 @@ from Command import CommandFactory
 class Table:	
 	
 	db=None
+
 	
 	def __init__(self,**kwargs):
 		self._data={"id":None}
-		self.validate_column(kwargs)
-	
-
-
-
-		
-		
-			
+		self.validate_column(kwargs)		
 		for i,j in kwargs.items():
 			self._data[i]=j
 			
@@ -26,6 +20,7 @@ class Table:
 		
 	def __getattribute__(self,key):
 		data=object.__getattribute__(self,"_data")
+		
 		if key in data:
 			return data[key]
 		return object.__getattribute__(self,key)
@@ -39,8 +34,28 @@ class Table:
 	@classmethod
 	def get_name(cls):
 			return cls.__name__
-	
-	
+			
+			
+			
+			
+			
+			
+	# check object attribute when instantiate	
+	# inspect fileds
+	def validate_column(self,kwargs):
+		fields  = ["id"]
+		
+		for name,field in inspect.getmembers(self.__class__):
+			if isinstance(field,Column):
+				fields.append(name)
+			elif isinstance(field,ForeignKey):
+				fields.append(name)	
+		for name in kwargs:
+				if name not in fields:
+					if name+"_id" !=name:						
+						raise ValueError
+				
+										
 	# inspect field
 	@classmethod		
 	def get_create_command(cls):
@@ -50,23 +65,20 @@ class Table:
 	
 			for name,field in inspect.getmembers(cls):
 				if isinstance(field,Column):
-					fields.append((f"{name}",f"{field.type}"))
-			fields=[" ".join(x) for x in fields]	
+					fields.append((f"{name}",f"{field.type}"))		
+				elif isinstance(field,ForeignKey):
+					fields.append((f"{name}_id",f"{field.type}"))
+					
+			fields=[" ".join(x) for x in fields]		
+					
 			return CommandFactory.get_command("create").format(table_name=cls.get_name(),fields=",".join(fields))
 			
 	
 		
-		
-	# check object attribute when instantiate	
-	# inspect fileds
-	def validate_column(self,kwargs):
-		fields  = self.get_fields_with_id() 
-		
-		for name in kwargs:
-				
-				if name not in fields:
-					raise ValueError
-					
+	
+	
+	
+	
 	
 					
 	def get_insert_command(self):
@@ -85,15 +97,20 @@ class Table:
 				if isinstance(field,Column):
 					fields.append(name)
 					values.append(getattr(self,name))
-					placeholder.append("?")	
+					placeholder.append("?")
+				elif isinstance(field,ForeignKey):
+					fields.append(name+"_id")	
+					values.append(getattr(self,"test1").id)
+					placeholder.append("?")
 		return fields,values,placeholder
 		
-	
 	@classmethod
 	def get_select_all_command(cls):
 		fields=cls.get_fields_with_id()			
 			
 		return  CommandFactory.get_command("all").format(fields=",".join(fields),table_name=cls.get_name()),fields
+	
+	
 			
 	@classmethod		
 	def get_fields_with_id(cls):
@@ -101,10 +118,14 @@ class Table:
 		for name,field in inspect.getmembers(cls):
 			if isinstance(field,Column):
 				fields.append(name)
+			elif isinstance(field,ForeignKey):
+				fields.append(name+"_id")
 				
 		return fields	
 			
-					
+		
+				
+		
 		
 	@classmethod
 	def all(cls):
@@ -112,10 +133,68 @@ class Table:
 		command,fields =  cls.get_select_all_command()
 		
 		values = cls.db.execute(command).fetchall()	
+	
 		for row in values:
 			data = dict(zip(fields,row))
-			data_obj.append(cls(**data))							
-		return data_obj
+			data_obj.append(cls(**data))
+		return data_obj	
+	
+						
+	@classmethod
+	def get_select_where_command(cls,kwargs):
+		fields =["id"]
+		for name,field in inspect.getmembers(cls):
+			if isinstance(field,Column) :
+				fields.append(name)
+			elif isinstance(field,ForeignKey):
+						fields.append(name+"_id")
+		
+						
+		filters=[]
+		param =[] 
+						
+		for key,value in kwargs.items():
+			filters.append(key +" =?")	
+			param.append(value)
+			
+			
+		command="SELECT {fields} FROM {table_name} WHERE {filters}".format(fields=",".join(fields),table_name=cls.get_name(),filters=" AND ".join(filters))
+		
+		
+		return command,param,fields
+		
+		
+	@classmethod	
+	def get(cls,**kwargs):
+			command,param,fields = cls.get_select_where_command(kwargs)
+			values=cls.db.execute(command,param).fetchone()		
+			new_fields,new_values = cls.check_foreignkey_and_modify(fields,values)
+		#	print(new_fields)
+			#print(new_values)
+			data = dict(zip(new_fields,new_values))
+			
+			return cls(**data)
+	
+					
+	# if its contain foreign key that gonna make foreign key data object and add it to values .if not just return the same
+			
+	@classmethod		
+	def check_foreignkey_and_modify(cls,fields,values):
+
+			new_fields=[]
+			new_values=[]
+			for field,value in zip(fields,values):
+				if field.endswith("_id"):
+					field = field[:-3]
+					cla = getattr(cls,field).table
+					value = cla.get(id=value)
+										
+				new_fields.append(field)
+				new_values.append(value)
+			return new_fields,new_values
+			
+						
+						
 		
 		
 	@classmethod	
@@ -130,6 +209,13 @@ class Table:
 class Column:
 	def __init__(self,type):
 		self.type=type
+		
+		
+class ForeignKey:
+		def __init__(self,Table):
+			self.type="INTEGER"
+			self.table = Table
+			
 		
 		
 

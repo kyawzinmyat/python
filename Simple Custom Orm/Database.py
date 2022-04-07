@@ -24,7 +24,7 @@ class Database:
 		
 	def create(self,Table):
 		self.execute(Table.get_create_command())
-	
+	#	print(Table.get_create_command())
 		
 	def table(self):
 	
@@ -34,12 +34,24 @@ class Database:
 	def save(self,instance):
 		
 		command,values = instance.get_insert_command()
+	#	print(command,values)
+		
 		self.execute(command,values)
-		instance._data["id"]=self.cursor.lastrowid
+		instance._data["id"]= self.cursor.lastrowid
 		self.call_commit()
+#		
+		
+		
+	def drop(self,table):
+		self.execute(CommandFactory.get_command("drop").format(table_name=table.get_name()))
+	
+	
+	
 		
 	def call_commit(self):
 		self.conn.commit()
+		
+		
 
 		
 		

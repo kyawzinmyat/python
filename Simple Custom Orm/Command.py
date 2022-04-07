@@ -9,7 +9,9 @@ class CommandFactory:
 		
 		table_command ="SELECT name FROM sqlite_master WHERE name ='table' "
 		
-		all_command="SELECT {fields} FROM {table_name}"				
+		all_command="SELECT {fields} FROM {table_name}"
+		
+		drop_command ="DROP TABLE {table_name}"				
 										
 		@classmethod
 		def get_command(cls,command_name):
@@ -21,6 +23,8 @@ class CommandFactory:
 					return cls.all_command
 				elif command_name=="insert":
 					return cls.insert_command
+				elif command_name=="drop":
+					return cls.drop_command
 					
 					
 

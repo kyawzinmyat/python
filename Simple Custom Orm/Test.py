@@ -1,4 +1,4 @@
-
+import inspect
 
 j =[(1,"Kyaw"),(2,"Zin")]
 
@@ -26,14 +26,30 @@ for i  in k:
 
 
 class test:
+	
+	name ={"id":1}
+	
+	
 	@classmethod
 	def g(cls):
 		print(cls)
 	
 	def k(self):
 		self.__class__.g()
+
 		
-		
-j = test()
-j.g()
-j.k()
+class t:
+				
+	j = test()
+	
+	
+j =[1,2,3]
+l =["one","two","three"]
+
+print(dict(zip(j,l)))
+
+
+
+for i,j in zip(j,l):
+	print(j)
+
