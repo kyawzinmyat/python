@@ -14,7 +14,9 @@ class Database:
 		
 	def execute(self,command,values=None):
 		try:
-			if values:		
+			if values:
+				print(command)
+				print(values)
 				return self.cursor.execute(command,values)
 			return self.cursor.execute(command)
 			
@@ -24,7 +26,7 @@ class Database:
 		
 	def create(self,Table):
 		self.execute(Table.get_create_command())
-	#	print(Table.get_create_command())
+	
 		
 	def table(self):
 	
@@ -33,9 +35,7 @@ class Database:
 		
 	def save(self,instance):
 		
-		command,values = instance.get_insert_command()
-	#	print(command,values)
-		
+		command,values=instance.check_insert_or_update()
 		self.execute(command,values)
 		instance._data["id"]= self.cursor.lastrowid
 		self.call_commit()

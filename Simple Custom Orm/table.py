@@ -20,11 +20,16 @@ class Table:
 		
 	def __getattribute__(self,key):
 		data=object.__getattribute__(self,"_data")
-		
+		#print("called")
 		if key in data:
 			return data[key]
 		return object.__getattribute__(self,key)
 		
+	def __setattr__(self,key,value):
+		super().__setattr__(key,value)
+		data = object.__getattribute__(self,"_data")
+		if key in data:
+			self._data[key]=value
 			
 		
 		
@@ -88,7 +93,38 @@ class Table:
 			command =CommandFactory.get_command("insert").format(table_name=self.__class__.get_name(),fields=",".join(fields),placeholder=",".join(placeholder))
 			
 			return command,values
-			
+	
+	def get_update_command(self):
+		fields=[]
+		values =[]
+		
+		for name,field in inspect.getmembers(self.__class__):
+			if isinstance(field,Column):
+				fields.append(name+" = ? ")
+			elif isinstance(field,ForeignKey):
+				foreign_key=getattr(self,name)
+				__class__.db.save(foreign_key)
+				
+		
+		data = self._data
+		
+		for field in fields:	
+			values.append(data[field[:-5]])
+				
+		
+		
+		
+		command = "UPDATE {table_name} SET {fields} WHERE id={id}".format(table_name=self.__class__.get_name(),fields=",".join(fields),id=self.id)
+		return command,values
+				
+		
+		
+	def check_insert_or_update(self):
+			if self.id:
+					return self.get_update_command()
+			return self.get_insert_command()		
+					
+									
 	def get_fields_values_placeholders(self):
 		fields=[]
 		values=[]
@@ -171,8 +207,6 @@ class Table:
 			command,param,fields = cls.get_select_where_command(kwargs)
 			values=cls.db.execute(command,param).fetchone()		
 			new_fields,new_values = cls.check_foreignkey_and_modify(fields,values)
-		#	print(new_fields)
-			#print(new_values)
 			data = dict(zip(new_fields,new_values))
 			
 			return cls(**data)
