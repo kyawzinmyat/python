@@ -1,5 +1,5 @@
-l1 =['n','e']
-l2 =['e','n']
+l1 =['n','e','n']
+l2 =['o','e','n']
 
 table =[[0 for x in range(len(l1)+1)]for j in range(len(l2)+1)]
 
