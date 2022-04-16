@@ -18,7 +18,8 @@ class Stack:
 #		
 #st1 = Stack()
 #st1.add(4)
-#st1.add([3,4])
-#st1.print()
-#st1.pop_left()
+#st1.add(3)kb
+#st1.print()egmzqq¹d
+
+#print(st1.pop_left())
 #st1.print()
