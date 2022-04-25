@@ -9,6 +9,7 @@ class RollingHash:
 		self.hash_of_pattern =0
 		self.calculate_hash_of_pattern()
 		self.answer=[]
+		self.mul_inverse_mod= pow(self.base,self.prime-2,self.prime)
 		
 	def append(self,new):
 		self.hash = (self.hash*self.base+new)%self.prime
@@ -21,7 +22,7 @@ class RollingHash:
 			
 		
 	def pop(self,old):
-		self.magic = (self.magic*pow(self.base,self.prime-2,self.prime))%self.prime
+		self.magic = (self.magic*self.mul_inverse_mod)%self.prime
 		self.hash = (self.hash-old*self.magic)%self.prime
 		
 		

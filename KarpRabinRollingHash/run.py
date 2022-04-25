@@ -8,21 +8,24 @@ from StringMatchwithRollingHash import KarpRabinStringMatch
 
 
 def test_rolling_hash():
-	docs = "jkjklmn abcdef gh i"
-	pattern ="jkjklmn a"
+	docs = "wasn't right. Was this the only feeling she'd have for over five years of hard work? It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
+
+	pattern ="It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
 	rh = RollingHash(docs,pattern)
 	
-	cap_index(docs,rh.roll())
+	print(rh.roll())
+	#cap_index(docs,rh.roll())
 
 	
 
 				
-def test_karprabin_string_match():
-	docs="the fox is in thethe house"
-	pattern ="the"
+def test_karprabin_string_match():	
+	docs = "wasn't right. Was this the only feeling she'd have for over five years of hard work? It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
+	pattern ="It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
+	
 	kr= KarpRabinStringMatch(pattern,docs)
 	
-	cap_index(docs,kr.match())
+	#cap_index(docs,kr.match())
 	
 	
 	

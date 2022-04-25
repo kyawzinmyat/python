@@ -1,14 +1,18 @@
 class Maze:
 	def __init__(self):
 		self.maze =[
-			["#"," ","#","#","E","#"],
-			["#"," "," ","#"," ","#"],
-			["#","#"," "," "," ","#"],
-			["#","#"," ","#","#","#"],
-			["S"," "," ","#","#","#"]
+			["#"," ","#","#","E","#","#","#","#"],
+			["#"," "," ","#"," ","#","#","#","#"],
+			["#","#"," "," "," ","#","#","#","#"],
+			["#","#"," ","#","#","#","#","#","#"],
+			["S"," "," ","#","#","#","#","#","#"],
+			["#"," ","#","#","#","#","#","#","#"],
+			["#"," ","#","#","#","#","#","#","#"]
 		]
-		self.start ="S"
-		self.stop="E"		
+		self.start ="○"
+		self.stop="●"
+		self.blank="□"
+		self.wall ="■"	
 		
 		
 	def print(self,custom_maze=None):
@@ -34,21 +38,21 @@ class Maze:
 		row_range=len(self.maze)
 		col_range=len(self.maze[0])
 		if index[0]+1<row_range:#down
-				if self.maze[index[0]+1][index[1]]==" " or self.maze[index[0]+1][index[1]]=="E":
+				if self.maze[index[0]+1][index[1]]==self.blank or self.maze[index[0]+1][index[1]]==self.stop:
 					list_of_index.append([index[0]+1,index[1]])
 					
 		
 		if index[1]-1>=0:##left
-			if self.maze[index[0]][index[1]-1]==" " or self.maze[index[0]][index[1]-1]=="E": 
+			if self.maze[index[0]][index[1]-1]==self.blank or self.maze[index[0]][index[1]-1]==self.stop: 
 					list_of_index.append([index[0],index[1]-1])
 					
 		
 		if index[0]-1>=0:#up
-			if self.maze[index[0]-1][index[1]]==" " or self.maze[index[0]-1][index[1]]=="E":
+			if self.maze[index[0]-1][index[1]]==self.blank or self.maze[index[0]-1][index[1]]==self.stop:
 					list_of_index.append([index[0]-1,index[1]])
 		
 		if index[1]+1<col_range:#right
-			if self.maze[index[0]][index[1]+1]==" " or self.maze[index[0]][index[1]+1]=="E":
+			if self.maze[index[0]][index[1]+1]==self.blank or self.maze[index[0]][index[1]+1]==self.stop:
 					list_of_index.append([index[0],index[1]+1])
 						
 	

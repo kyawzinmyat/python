@@ -9,16 +9,14 @@ class Dfs:
 		self.maze = Maze()
 		self.visited=[]
 		self.nodelist =[]
+		self.mark="*"
 		
 
 		
 	def traverse(self):
-		steps=0
 		self.frointer = [self.maze.get_index_of(self.maze.start)]
-		self.nodelist.append(Node(None,self.maze.get_index_of(self.maze.start),self.maze.start))  # append start node
-		
+		self.nodelist.append(Node(None,self.maze.get_index_of(self.maze.start),self.maze.start))  # append start node		
 		while self.frointer:
-			steps+=1
 			current_index = self.frointer.pop()  # is in list form 
 			self.visited.append(current_index) 
 			self.check_is_end(current_index)
@@ -29,7 +27,8 @@ class Dfs:
 					self.nodelist.append(Node(current_index,adj_index,"_"))	
 					self.frointer.append(adj_index)
 					
-					
+	def set_maze(self,new_maze):
+		self.maze.maze=new_maze				
 					
 	def check_is_end(self,current_index):
 		if  self.maze.maze[current_index[0]][current_index[1]] ==self.maze.stop:## [0] is x [1] is y
@@ -72,9 +71,8 @@ class Dfs:
 	# take the list of index of actual path and fill with char	
 	def fill_path(self,index_list):
 		for i in index_list:
-				if self.maze.maze[i[0]][i[1]]==" ":
-					self.maze.maze[i[0]][i[1]]="x"
-	
+				if self.maze.maze[i[0]][i[1]]==self.maze.blank:
+					self.maze.maze[i[0]][i[1]]=self.mark
 		self.maze.print()	
 	
 	# its show all the space explored
