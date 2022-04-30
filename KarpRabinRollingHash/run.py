@@ -1,4 +1,4 @@
-
+import time
 from general_rolling_hash import RollingHash
 from StringMatchwithRollingHash import KarpRabinStringMatch
 
@@ -13,7 +13,7 @@ def test_rolling_hash():
 	pattern ="It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
 	rh = RollingHash(docs,pattern)
 	
-	print(rh.roll())
+#	print(rh.roll())
 	#cap_index(docs,rh.roll())
 
 	
@@ -22,8 +22,10 @@ def test_rolling_hash():
 def test_karprabin_string_match():	
 	docs = "wasn't right. Was this the only feeling she'd have for over five years of hard work? It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
 	pattern ="It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
-	
+	start = time.time()
 	kr= KarpRabinStringMatch(pattern,docs)
+	end = time.time()
+	print("Karp rabin- ",end-start)
 	
 	#cap_index(docs,kr.match())
 	
@@ -38,10 +40,23 @@ def cap_index(docs,index_list):
 	answer = "".join(answer)
 	print(answer)
 	
-	
+
+def test_count():
+	docs = "wasn't right. Was this the only feeling she'd have for over five years of hard work? It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
+	pattern ="It had been a simple realization that had changed Debra's life perspective. It was really so simple that she was embarrassed that she had lived the previous five years with the way she measured her worth. Now that she saw what she had been doing, she could see how sad it was. That made her all the more relieved she had made the change. The number of hearts her Instagram posts received wasn't any longer the indication of her own self-worth."
+	start = time.time()
+	c = docs.count(pattern)
+	print(c)
+	end = time.time()
+	print("python count - ",end-start)	
+		
+			
+					
 	
 if __name__ =="__main__":
-	test_rolling_hash()	
+	#test_rolling_hash()	
 	test_karprabin_string_match()
+	test_count()
+	print(time.time())
 
 

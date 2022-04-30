@@ -4,8 +4,6 @@
 
 from collections import deque
 
-
-
 class Queue(deque):
 	def __init__(self):
 		super().__init__()

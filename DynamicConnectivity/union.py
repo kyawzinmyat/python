@@ -1,7 +1,11 @@
+from plot import Plot
+
+
 class Union:
 	def __init__(self,size):
 		self.size= size
 		self.init_array()
+		
 		
 	
 		
@@ -21,6 +25,26 @@ class Union:
 		for index,mark in enumerate(self.array):
 			if mark==temp:
 				self.array[index]=second_index
+				
+	def plot(self):
+		self.plot = Plot()
+		self.add_nodes()
+		self.add_edge()
+		
+		
+	def add_nodes(self):
+		nodes =[num for num in range(self.size)]
+		self.plot.add_nodes(nodes)
+		self.add_edge()
+		self.plot.save_file("dynamic_connectivity")
+	
+	def add_edge(self):
+		for index,edge in enumerate(self.array):
+			if index!= edge:
+				self.plot.add_edge(index,edge)
+		
+
+		
 	
 		
 	def find_root(self,index):

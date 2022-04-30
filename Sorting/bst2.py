@@ -233,7 +233,7 @@ b.add(3)
 b.add(2)
 #b.add(1)
 
-#print(b.succesor(1))
+print(b.succesor(1))
 #b.inorder_2(b.root)
 #print(b.get_first())
 #print(b.get_last())
@@ -243,9 +243,3 @@ b.add(2)
 #print(b.insert_after(4,3))
 #print(b.insert_before(2,1))
 #b.inorder_2(b.root)
-t = None
-
-if t:
-	print(1)
-else:
-	print(2)

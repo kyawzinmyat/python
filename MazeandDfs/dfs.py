@@ -79,7 +79,7 @@ class Dfs:
 	def get_full(self):
 		temp = self.maze.maze[:]
 		for i in self.visited:
-			temp[i[0]][i[1]]="*"
+			temp[i[0]][i[1]]="☆"
 		self.maze.print(temp)
 			
 		

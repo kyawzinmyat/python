@@ -1,3 +1,6 @@
+import matplotlib.pyplot as plt
+
+
 
 class Graph:
 	def __init__(self):
@@ -43,5 +46,6 @@ class Graph:
 	def graph(self):
 		return self._graph
 		
+
 
 

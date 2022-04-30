@@ -1,6 +1,5 @@
 import math
 
-
 class Node:
 	def __init__(self,value):
 		self.value = value
@@ -117,6 +116,8 @@ b.add(11)
 b.add(4)
 b.add(6)
 b.add(8)
+
+b.inorder(b.root)
 
 #print(b.search(4))
 #b.inorder_2(b.root)

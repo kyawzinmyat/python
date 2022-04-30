@@ -2,6 +2,7 @@ class Node:
 	counter=-1
 	def __init__(self,name):
 		self.__outgoingNode_list =[]
+		self._adj_list=[]
 		self.index=self.setIndex()
 		self.name =name
 	
@@ -37,12 +38,7 @@ class Graph:
 		def addNewNode(self,listOfNodes):
 			for node in listOfNodes:
 				self.nodesList.append(node)
-			self.setRankMatrix()
-			
-			
-			
-			
-			
+			self.setRankMatrix()			
 			
 		## need to refactor	
 		def setNodeRankMatrix(self):
@@ -91,13 +87,7 @@ class Graph:
 			
 		def initializeNodesRankMatrix(self):
 			self.nodeRankMatrix=[[0 for j in range(len(self.nodesList))]for i in range(len(self.nodesList))]
-			
-			
-		
-		
-				
-			
-			
+													
 		def setRankMatrix(self):
 			self.setNodeRankMatrix()
 			self.setValueForRankMatrix()
@@ -144,14 +134,17 @@ listOfNodes=[nodeA,nodeB,nodeC,nodeD]
 internet = Graph()
 internet.addNewNode(listOfNodes)
 #print(internet.getNodesRankMatrix())
-#print(internet.getRankMatrix())		
+#print(internet.getRankMatrix())
+		
 internet.calculateRank()	
+
+print(internet.nodeRankMatrix)
 #print(internet.nodeRankMatrix)
 #print(internet.getRankMatrix())
 
 
 j=internet.getRankMatrix()
-print(j)
+#print(j)
 l = internet.getRankMatrix()
 l=sorted(l,reverse=True)
 j= internet.getNodeRankDict()
